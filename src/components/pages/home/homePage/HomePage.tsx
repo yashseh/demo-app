@@ -1,24 +1,33 @@
 import HomeHeader from '@/src/components/molecules/home-header/HomeHeader';
+import BasketCard from '@/src/components/organisms/cards/basket-card/BasketCard';
+import { useGetBasketsQuery } from '@/src/state/slices/user/UserApi';
 import { useThemeAwareObject } from '@/src/theme';
 import { useTheme } from '@/src/theme/Theme.context';
 import CustomSafeArea from '@/src/wrappers/customSafeArea/CustomSafeArea';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { ScrollView, View } from 'react-native';
 import { getStyles } from './HomePage.styles';
 
 const HomePage = () => {
+    // const { data: investments } = useGetInvestmentsQuery();
+    const { data: baskets } = useGetBasketsQuery();
+
     const { theme } = useTheme();
     const styles = useThemeAwareObject(getStyles);
+
+    console.log(baskets, 'baskets');
     return (
         <CustomSafeArea hideBottom customStyles={{ backgroundColor: theme.color.primary }}>
             <HomeHeader />
             <View style={styles.container}>
-                <Text>HomePage</Text>
+                <ScrollView showsVerticalScrollIndicator={false}>
+                    {baskets?.data.map((basket) => (
+                        <BasketCard basket={basket} onPress={() => {}} key={basket.id} />
+                    ))}
+                </ScrollView>
             </View>
         </CustomSafeArea>
     );
 };
 
 export default HomePage;
-
-const styles = StyleSheet.create({});

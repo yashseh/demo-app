@@ -1,6 +1,6 @@
-import { phoneFromSlice } from '@/src/state/slices/login/LoginSlice';
-import { store, useAppSelector } from '@/src/state/Store';
-import { useThemeAwareObject } from '@/src/theme';
+import { phoneFromSlice, setTheme } from '@/src/state/slices/login/LoginSlice';
+import { store, useAppDispatch, useAppSelector } from '@/src/state/Store';
+import { DEFAULT_DARK_THEME, DEFAULT_LIGHT_THEME, useThemeAwareObject } from '@/src/theme';
 import { DEFAULT_DARK_THEME_ID } from '@/src/theme/DefaultDark.theme';
 import { useTheme } from '@/src/theme/Theme.context';
 import { useRouter } from 'expo-router';
@@ -9,11 +9,21 @@ import { Alert, StyleSheet, Switch, Text, TouchableOpacity, View } from 'react-n
 import { Avatar, IconButton } from 'react-native-paper';
 
 const HomeHeader = () => {
-    const { theme, toggleTheme } = useTheme();
+    const { theme, setTheme: setThemeContext } = useTheme();
     const styles = useThemeAwareObject(getStyles);
     const router = useRouter();
+    const dispatch = useAppDispatch();
 
     const phone = useAppSelector(phoneFromSlice);
+
+    const handleToggleTheme = React.useCallback(() => {
+        const newTheme = theme.id === DEFAULT_DARK_THEME_ID ? DEFAULT_LIGHT_THEME : DEFAULT_DARK_THEME;
+        // Dispatch to Redux to persist the theme
+        dispatch(setTheme(newTheme.id));
+
+        // Also update the theme context for immediate UI update
+        setThemeContext(newTheme);
+    }, [theme, dispatch, setThemeContext]);
 
     const handleLogout = () => {
         Alert.alert('Logout', 'Are you sure you want to logout?', [
@@ -53,7 +63,7 @@ const HomeHeader = () => {
                 <Text style={styles.themeLabel}>🌙</Text>
                 <Switch
                     value={theme.id === DEFAULT_DARK_THEME_ID}
-                    onValueChange={toggleTheme}
+                    onValueChange={handleToggleTheme}
                     trackColor={{ false: theme.color.lightGrey, true: theme.color.secondary }}
                     thumbColor={theme.id === DEFAULT_DARK_THEME_ID ? theme.color.background : theme.color.primary}
                 />

@@ -1,18 +1,43 @@
 import CustomToast from '@/src/components/molecules/toastMessage/ToastMessage';
 import { useScreenInsets } from '@/src/hooks/useScreenInsets';
-import { persistor, store } from '@/src/state/Store';
-import { DEFAULT_LIGHT_THEME } from '@/src/theme';
+import { persistor, store, useAppSelector } from '@/src/state/Store';
+import { themeObjectFromSlice } from '@/src/state/slices/login/LoginSlice';
 import { ThemeProvider, useTheme } from '@/src/theme/Theme.context';
 import LoaderWrapper from '@/src/wrappers/loaderWrapper/LoaderWrapper';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
+import React from 'react';
 import { Platform } from 'react-native';
 import { DefaultTheme, PaperProvider } from 'react-native-paper';
 import 'react-native-reanimated';
 import { ToastProvider } from 'react-native-toast-notifications';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
+
+// Component to sync theme context with Redux
+function ThemeSyncComponent({ children }: { children: React.ReactNode }) {
+    const themeFromRedux = useAppSelector(themeObjectFromSlice);
+    const { setTheme } = useTheme();
+
+    // Sync theme context with Redux when Redux theme changes
+    React.useEffect(() => {
+        setTheme(themeFromRedux);
+    }, [themeFromRedux, setTheme]);
+
+    return children as React.ReactElement;
+}
+
+// Component to read theme from Redux and provide it to ThemeProvider
+function ThemeProviderWrapper({ children }: { children: React.ReactNode }) {
+    const themeFromRedux = useAppSelector(themeObjectFromSlice);
+
+    return (
+        <ThemeProvider initial={themeFromRedux}>
+            <ThemeSyncComponent>{children}</ThemeSyncComponent>
+        </ThemeProvider>
+    );
+}
 
 // Separate component to use theme inside the provider
 function ThemedApp() {
@@ -77,9 +102,9 @@ export default function RootLayout() {
     return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-                <ThemeProvider initial={DEFAULT_LIGHT_THEME}>
+                <ThemeProviderWrapper>
                     <ThemedApp />
-                </ThemeProvider>
+                </ThemeProviderWrapper>
             </PersistGate>
         </Provider>
     );

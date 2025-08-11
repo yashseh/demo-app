@@ -1,6 +1,7 @@
 export interface ILoginInitialState {
     phone: string;
     token: string;
+    theme: string;
 }
 
 export interface ILoginRequest {
