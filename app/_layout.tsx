@@ -14,14 +14,10 @@ import { ToastProvider } from 'react-native-toast-notifications';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 
-export default function RootLayout() {
-    const [loaded] = useFonts({
-        SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf')
-    });
-
-    const { insetsTop } = useScreenInsets();
-
+// Separate component to use theme inside the provider
+function ThemedApp() {
     const { theme } = useTheme();
+    const { insetsTop } = useScreenInsets();
 
     const paperTheme = {
         ...DefaultTheme,
@@ -44,6 +40,35 @@ export default function RootLayout() {
         }
     };
 
+    return (
+        <PaperProvider theme={paperTheme}>
+            <LoaderWrapper>
+                <ToastProvider
+                    renderToast={(toast) => <CustomToast toast={toast} />}
+                    placement="top"
+                    duration={3000}
+                    offset={Platform.OS === 'android' ? insetsTop : 0}
+                    animationType="slide-in"
+                    swipeEnabled
+                >
+                    <Stack screenOptions={{ headerShown: false }}>
+                        <Stack.Screen name="index" options={{ headerShown: false }} />
+                        <Stack.Screen name="(home)" options={{ headerShown: false }} />
+                        <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+                        <Stack.Screen name="+not-found" />
+                    </Stack>
+                    <StatusBar style="auto" />
+                </ToastProvider>
+            </LoaderWrapper>
+        </PaperProvider>
+    );
+}
+
+export default function RootLayout() {
+    const [loaded] = useFonts({
+        SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf')
+    });
+
     if (!loaded) {
         // Async font loading only occurs in development.
         return null;
@@ -52,27 +77,9 @@ export default function RootLayout() {
     return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-                <PaperProvider>
-                    <ThemeProvider initial={DEFAULT_LIGHT_THEME}>
-                        <LoaderWrapper>
-                            <ToastProvider
-                                renderToast={(toast) => <CustomToast toast={toast} />}
-                                placement="top"
-                                duration={3000}
-                                offset={Platform.OS === 'android' ? insetsTop : 0}
-                                animationType="slide-in"
-                                swipeEnabled
-                            >
-                                <Stack>
-                                    <Stack.Screen name="index" options={{ headerShown: false }} />
-                                    <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-                                    <Stack.Screen name="+not-found" />
-                                </Stack>
-                                <StatusBar style="auto" />
-                            </ToastProvider>
-                        </LoaderWrapper>
-                    </ThemeProvider>
-                </PaperProvider>
+                <ThemeProvider initial={DEFAULT_LIGHT_THEME}>
+                    <ThemedApp />
+                </ThemeProvider>
             </PersistGate>
         </Provider>
     );

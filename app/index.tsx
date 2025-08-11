@@ -14,7 +14,7 @@ const Splash = () => {
     useEffect(() => {
         setTimeout(() => {
             if (token) {
-                router.replace('/home');
+                router.replace('/(home)/home');
             } else {
                 router.replace('/signupOrlogin');
             }

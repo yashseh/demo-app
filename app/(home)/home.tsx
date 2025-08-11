@@ -1,12 +1,9 @@
+import HomePage from '@/src/components/pages/home/homePage/HomePage';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 const Home = () => {
-    return (
-        <View>
-            <Text>Home</Text>
-        </View>
-    );
+    return <HomePage />;
 };
 
 export default Home;

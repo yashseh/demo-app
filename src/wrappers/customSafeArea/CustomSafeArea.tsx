@@ -8,7 +8,6 @@ import THEME from '@/src/theme/Sizes.theme';
 const CustomSafeArea: React.FC<ICustomSafeAreaProps> = ({
     children,
     withPadding,
-    customClassStyles = 'bg-white',
     customStyles,
     hideTop,
     hideBottom
