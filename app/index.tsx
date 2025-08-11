@@ -1,3 +1,5 @@
+import { tokenFromSlice } from '@/src/state/slices/login/LoginSlice';
+import { useAppSelector } from '@/src/state/Store';
 import { Theme, useThemeAwareObject } from '@/src/theme';
 import { useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
@@ -7,12 +9,17 @@ import Animated, { FadeIn } from 'react-native-reanimated';
 const Splash = () => {
     const styles = useThemeAwareObject(getStyles);
     const router = useRouter();
+    const token = useAppSelector(tokenFromSlice);
 
     useEffect(() => {
         setTimeout(() => {
-            router.push('/signupOrlogin');
+            if (token) {
+                router.replace('/home');
+            } else {
+                router.replace('/signupOrlogin');
+            }
         }, 1000);
-    }, [router]);
+    }, []);
 
     return (
         <Animated.View entering={FadeIn} style={[styles.container]}>

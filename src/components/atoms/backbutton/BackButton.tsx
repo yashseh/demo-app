@@ -1,12 +1,15 @@
+import { showToast } from '@/src/components/molecules/toastMessage/ToastMessage';
 import { CROSS_ICON } from '@/src/constants/exporter';
 import { useRouter } from 'expo-router';
 import React, { memo, useMemo } from 'react';
 import { Pressable } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import { useToast } from 'react-native-toast-notifications';
 import { IBackButtonProps } from './BackButton.types';
 
 const BackButton: React.FC<IBackButtonProps> = ({ isCross, onPressBack }) => {
     const router = useRouter();
+    const toast = useToast();
 
     const handleBack = () => {
         const canGoBack = router.canDismiss();
@@ -16,7 +19,7 @@ const BackButton: React.FC<IBackButtonProps> = ({ isCross, onPressBack }) => {
             if (canGoBack) {
                 router.back();
             } else {
-                alert('not possible to go back');
+                showToast(toast, 'Cannot go back from this screen', 'info');
             }
         }
     };

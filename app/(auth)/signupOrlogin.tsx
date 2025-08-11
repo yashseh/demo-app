@@ -1,4 +1,4 @@
-import SignupOrLoginPage from '@/src/components/pages/signupOrLoginpage/SignupOrLoginPage';
+import SignupOrLoginPage from '@/src/components/pages/auth/signupOrLoginpage/SignupOrLoginPage';
 import React from 'react';
 
 const SignupOrLogin = () => {

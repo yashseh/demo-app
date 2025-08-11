@@ -16,7 +16,6 @@ const Input: React.FC<IInputProps> = forwardRef(({ errorMessage, customInputStyl
                 value={textInputProps.value}
                 autoComplete="off"
                 placeholderTextColor={theme.color.primary}
-                className="!rounded-lg text-base"
                 outlineStyle={styles.outline}
                 activeOutlineColor="#5B5B5B"
                 style={[styles.input, customInputStyle as TextStyle]}
@@ -24,7 +23,7 @@ const Input: React.FC<IInputProps> = forwardRef(({ errorMessage, customInputStyl
                 onChangeText={textInputProps.onChangeText}
                 {...textInputProps}
             />
-            {errorMessage && <Text className="text-[10px] left-1 top-1 text-red">{errorMessage}</Text>}
+            {errorMessage && <Text style={styles.errorText}>{errorMessage}</Text>}
         </View>
     );
 });
@@ -55,5 +54,11 @@ const styles = StyleSheet.create({
     outline: {
         borderWidth: 1,
         borderRadius: 12
+    },
+    errorText: {
+        fontSize: 10,
+        color: 'red',
+        marginLeft: 4,
+        marginTop: 4
     }
 });

@@ -6,7 +6,10 @@ const DEFAULT_DARK_COLOR_THEME: ColorTheme = {
     secondary: '#3B8EF6',
     primaryGrey: '#5B5B5B',
     textBlack: '#FFFFFF',
-    lightGrey: '#FAFAFC'
+    lightGrey: '#FAFAFC',
+    green: '#008000',
+    ratingYellow: '#FFD700',
+    red: '#FF0000'
 };
 
 export const DEFAULT_DARK_THEME_ID = 'default-dark';

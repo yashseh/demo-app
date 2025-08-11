@@ -1,7 +1,7 @@
 // components/atoms/otpInput/OtpInput.tsx
-import React, { useEffect, useRef } from 'react';
+import { useTheme } from '@/src/theme/Theme.context';
+import React from 'react';
 import { OtpInputRef, OtpInput as RNOtpInput } from 'react-native-otp-entry';
-import { useTheme } from '@/theme/Theme.context';
 import { createStyles } from './OtpInput.styles';
 import { IOtpInputProps } from './OtpInput.types';
 
@@ -46,5 +46,7 @@ const OtpInput = React.forwardRef<OtpInputRef, IOtpInputProps>(
         );
     }
 );
+
+OtpInput.displayName = 'OtpInput';
 
 export default React.memo(OtpInput);

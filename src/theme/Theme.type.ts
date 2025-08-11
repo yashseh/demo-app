@@ -5,6 +5,9 @@ export interface ColorTheme {
     textBlack: string;
     secondary: string;
     lightGrey: string;
+    green: string;
+    ratingYellow: string;
+    red: string;
 }
 
 export interface SpacingTheme {
