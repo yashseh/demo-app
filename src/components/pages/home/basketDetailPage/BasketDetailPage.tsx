@@ -2,12 +2,14 @@ import BackButton from '@/src/components/atoms/backbutton/BackButton';
 import Button from '@/src/components/atoms/button/Button';
 import Heading from '@/src/components/atoms/heading/Heading';
 import { IHeadingTypes } from '@/src/components/atoms/heading/Heading.types';
+import SubscribeBasketBottomSheet from '@/src/components/organisms/bottom-sheets/subscribebasket-bottomsheet/SubscribeBasketBottomSheet';
 import { useGetBasketChartDetailsQuery, useGetBasketDetailQuery } from '@/src/state/slices/user/UserApi';
 import { useThemeAwareObject } from '@/src/theme';
 import { useTheme } from '@/src/theme/Theme.context';
 import CustomSafeArea from '@/src/wrappers/customSafeArea/CustomSafeArea';
+import BottomSheet from '@gorhom/bottom-sheet';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { ActivityIndicator, Dimensions, ScrollView, Text, TouchableOpacity, View } from 'react-native';
 import { LineChart } from 'react-native-chart-kit';
 import { getStyles } from './BasketDetailPage.styles';
@@ -20,6 +22,7 @@ const BasketDetailPage = () => {
     const { id } = useLocalSearchParams();
     const router = useRouter();
     const { theme } = useTheme();
+    const subscribeBasketBottomSheetRef = useRef<BottomSheet>(null);
     const styles = useThemeAwareObject(getStyles);
     const [selectedPeriod, setSelectedPeriod] = useState<PeriodType>('1w');
 
@@ -276,7 +279,7 @@ const BasketDetailPage = () => {
     }
 
     return (
-        <CustomSafeArea hideBottom customStyles={styles.containerMain} withPadding>
+        <CustomSafeArea customStyles={styles.containerMain} withPadding>
             <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
                 {renderHeader()}
                 {renderBasketInfo()}
@@ -285,6 +288,8 @@ const BasketDetailPage = () => {
                 {renderHoldings()}
                 <View style={styles.bottomSpacing} />
             </ScrollView>
+            <Button content="Subscribe" onPress={() => subscribeBasketBottomSheetRef.current?.expand()} />
+            <SubscribeBasketBottomSheet ref={subscribeBasketBottomSheetRef} />
         </CustomSafeArea>
     );
 };

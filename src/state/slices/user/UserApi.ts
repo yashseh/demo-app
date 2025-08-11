@@ -1,6 +1,13 @@
 import { endpoints } from '@/src/api/endpoints';
 import { baseApi } from '@/src/state/baseApi';
-import { IBasketChartResponse, IBasketDetailResponse, IUserBasketsResponse, IUserInvestments } from './User.types';
+import {
+    IBasketChartResponse,
+    IBasketDetailResponse,
+    ISubscribeToBasketRequestBody,
+    ISubscribeToBasketResponse,
+    IUserBasketsResponse,
+    IUserInvestments
+} from './User.types';
 
 const userApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -18,6 +25,13 @@ const userApi = baseApi.injectEndpoints({
         }),
         getBasketDetail: builder.query<IBasketDetailResponse, { id: string }>({
             query: ({ id }) => endpoints.basketDetail(id)
+        }),
+        subscribeToBasket: builder.mutation<ISubscribeToBasketResponse, ISubscribeToBasketRequestBody>({
+            query: (body) => ({
+                url: endpoints.subscribeToBasket(body.basketId),
+                method: 'POST',
+                body
+            })
         })
     })
 });

@@ -32,7 +32,7 @@ export const getStyles = (theme: Theme) =>
             marginTop: THEME.spacing.xs_4
         },
         basketInfoContainer: {
-            backgroundColor: theme.color.lightGrey,
+            backgroundColor: theme.color.background,
             borderRadius: THEME.borderRadius.lg_16,
             padding: THEME.spacing.lg_24,
             marginBottom: THEME.spacing.lg_24
@@ -68,7 +68,7 @@ export const getStyles = (theme: Theme) =>
         },
         riskLabel: {
             fontSize: 14,
-            color: theme.color.primaryGrey,
+            color: theme.color.textBlack,
             fontWeight: '500'
         },
         riskBadge: {
@@ -144,7 +144,9 @@ export const getStyles = (theme: Theme) =>
             marginBottom: THEME.spacing.lg_24
         },
         descriptionContainer: {
-            backgroundColor: theme.color.lightGrey,
+            backgroundColor: theme.color.background,
+            borderWidth: 1,
+            borderColor: theme.color.lightGrey,
             borderRadius: THEME.borderRadius.lg_16,
             padding: THEME.spacing.lg_24,
             marginBottom: THEME.spacing.lg_24
@@ -161,7 +163,9 @@ export const getStyles = (theme: Theme) =>
             lineHeight: 22
         },
         holdingsContainer: {
-            backgroundColor: theme.color.lightGrey,
+            backgroundColor: theme.color.background,
+            borderWidth: 1,
+            borderColor: theme.color.lightGrey,
             borderRadius: THEME.borderRadius.lg_16,
             padding: THEME.spacing.lg_24,
             marginBottom: THEME.spacing.lg_24

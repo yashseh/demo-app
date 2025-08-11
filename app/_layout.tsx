@@ -4,11 +4,13 @@ import { persistor, store, useAppSelector } from '@/src/state/Store';
 import { themeObjectFromSlice } from '@/src/state/slices/login/LoginSlice';
 import { ThemeProvider, useTheme } from '@/src/theme/Theme.context';
 import LoaderWrapper from '@/src/wrappers/loaderWrapper/LoaderWrapper';
+import { PortalProvider } from '@gorhom/portal';
 import { useFonts } from 'expo-font';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Platform } from 'react-native';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { DefaultTheme, PaperProvider } from 'react-native-paper';
 import 'react-native-reanimated';
 import { ToastProvider } from 'react-native-toast-notifications';
@@ -102,9 +104,13 @@ export default function RootLayout() {
     return (
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-                <ThemeProviderWrapper>
-                    <ThemedApp />
-                </ThemeProviderWrapper>
+                <GestureHandlerRootView style={{ flex: 1 }}>
+                    <ThemeProviderWrapper>
+                        <PortalProvider>
+                            <ThemedApp />
+                        </PortalProvider>
+                    </ThemeProviderWrapper>
+                </GestureHandlerRootView>
             </PersistGate>
         </Provider>
     );
