@@ -11,7 +11,7 @@ import { router } from 'expo-router';
 import { ICustomErrorResponse, IErrorResponse } from './global.types';
 
 const baseQuery = fetchBaseQuery({
-    baseUrl: `${process.env.BASE_URL}`,
+    baseUrl: `${process.env.EXPO_PUBLIC_BASE_URL}`,
     credentials: 'include',
     prepareHeaders: (headers, api) => {
         headers.set('Content-Type', 'application/json');

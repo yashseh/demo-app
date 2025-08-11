@@ -1,14 +1,8 @@
+import BasketDetailPage from '@/src/components/pages/home/basketDetailPage/BasketDetailPage';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 
 const BasketDetail = () => {
-    return (
-        <View>
-            <Text>basket-detail</Text>
-        </View>
-    );
+    return <BasketDetailPage />;
 };
 
 export default BasketDetail;
-
-const styles = StyleSheet.create({});

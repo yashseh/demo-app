@@ -1,6 +1,6 @@
 import { endpoints } from '@/src/api/endpoints';
 import { baseApi } from '@/src/state/baseApi';
-import { IUserBasketsResponse, IUserInvestments } from './User.types';
+import { IBasketChartResponse, IBasketDetailResponse, IUserBasketsResponse, IUserInvestments } from './User.types';
 
 const userApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
@@ -12,8 +12,15 @@ const userApi = baseApi.injectEndpoints({
             transformResponse: (response: IUserBasketsResponse) => {
                 return response;
             }
+        }),
+        getBasketChartDetails: builder.query<IBasketChartResponse, { id: string; period: '1w' | '1m' | '6m' | '1y' }>({
+            query: ({ id, period }) => endpoints.basketChartDetails(id, period)
+        }),
+        getBasketDetail: builder.query<IBasketDetailResponse, { id: string }>({
+            query: ({ id }) => endpoints.basketDetail(id)
         })
     })
 });
 
-export const { useGetInvestmentsQuery, useGetBasketsQuery } = userApi;
+export const { useGetInvestmentsQuery, useGetBasketsQuery, useGetBasketChartDetailsQuery, useGetBasketDetailQuery } =
+    userApi;

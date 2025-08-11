@@ -29,3 +29,21 @@ export interface IUserBasketHolding {
     price: number;
     changePct: number;
 }
+
+export interface IBasketDetailResponse {
+    status: string;
+    code: number;
+    data: IUserBasket[];
+}
+
+export interface IBasketChartDataPoint {
+    timestamp: number;
+    value: number;
+}
+
+export interface IBasketChartResponse {
+    status: string;
+    code: number;
+    count: number;
+    data: IBasketChartDataPoint[];
+}

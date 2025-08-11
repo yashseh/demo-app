@@ -4,6 +4,7 @@ import { useGetBasketsQuery } from '@/src/state/slices/user/UserApi';
 import { useThemeAwareObject } from '@/src/theme';
 import { useTheme } from '@/src/theme/Theme.context';
 import CustomSafeArea from '@/src/wrappers/customSafeArea/CustomSafeArea';
+import { useRouter } from 'expo-router';
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 import { getStyles } from './HomePage.styles';
@@ -11,6 +12,11 @@ import { getStyles } from './HomePage.styles';
 const HomePage = () => {
     // const { data: investments } = useGetInvestmentsQuery();
     const { data: baskets } = useGetBasketsQuery();
+    const router = useRouter();
+
+    const onPressBasket = (id: string) => {
+        router.push(`/basket-detail?id=${id}`);
+    };
 
     const { theme } = useTheme();
     const styles = useThemeAwareObject(getStyles);
@@ -22,7 +28,7 @@ const HomePage = () => {
             <View style={styles.container}>
                 <ScrollView showsVerticalScrollIndicator={false}>
                     {baskets?.data.map((basket) => (
-                        <BasketCard basket={basket} onPress={() => {}} key={basket.id} />
+                        <BasketCard basket={basket} onPress={() => onPressBasket(basket.id)} key={basket.id} />
                     ))}
                 </ScrollView>
             </View>

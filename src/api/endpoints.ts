@@ -5,6 +5,7 @@ export const endpoints = {
     verifyOtp: `${baseUrl}verify-otp`,
     resentOtp: `${baseUrl}resend-otp`,
     baskets: `${baseUrl}baskets`,
-    basketDetail: (id: string) => `${baseUrl}baskets/${id}`,
+    basketChartDetails: (id: string, period: '1w' | '1m' | '6m' | '1y') => `${baseUrl}baskets/${id}/chart/${period}`,
+    basketDetail: (id: string) => `${baseUrl}basket/${id}`,
     investments: `${baseUrl}investments`
 };
